@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Git、Github、Github Desktop]]></title>
+    <url>%2FGit%2FGit%E3%80%81Github%E3%80%81Github%20Desktop%2F</url>
+    <content type="text"><![CDATA[最近配了台新电脑，在装Git的时候遇到了一些问题，在此记录一下 百度Git安装教程一般都告诉我们先去官网下载，安装完后进行配置 配置用户名：git config –global user.name “xxxx” 配置邮箱：git config –global user.email “xxxx” 生成SSH：ssh-keygen -t rsa –C “youremail@example.com“ 那么这三步到底是干啥的？有没有必要呢？首先要知道的是clone和push有两种方式，一种是https,每次clone（私有项目，clone共有项目不需要）和push都需要输入用户名和密码，另一种就是通过ssh就行验证，这样就不用输入用户名和密码了。配置用户名和邮箱在我的理解中就是添加一个身份认证标记。用户向远程仓库push的时候Git“仿佛”是不会根据你用户名和密码来进行记录的，因为多个用户可以只使用一个用户名和密码，特别是使用SSH的时候。生成的SSH分为一个私钥一个公钥，公钥一般都要配置到github上（公司git仓库同理），每次通过SSH验证，然后就可以愉快的工作了，而不需要一直输入用户名和密码所以用户名和邮箱是必须配置的，不配置在push的时候就会报错，而SSH根据自己的习惯和喜好来决定~ 再说一下Github Desktop，这是一个git/github的图形化操作工具，他是自带git的，之前我一直不知道，位置是user-&gt;AppData-&gt;Local-&gt;GithubDesktop-&gt;app-x.x.x-&gt;resources&gt;app-&gt;git。然后使用自己的Github或者公司账号就可以登录了，初次登录和File-&gt;Options-&gt;git都可以设置用户名和邮箱，和之前“git config –global”命令效果完全相同，而且他们修改的都是同一个配置文件user-&gt;.gitconfig，使用任何一种方式修改，都是修改的这个文件。Github Desktop每次clone都巨慢超时失败，我也不知道为啥]]></content>
+      <categories>
+        <category>Git</category>
+      </categories>
+      <tags>
+        <tag>Git</tag>
+        <tag>Github</tag>
+        <tag>Github Desktop</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Java多线程之join()方法]]></title>
     <url>%2FJavaSE%2FJava%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B9%8Bjoin-%E6%96%B9%E6%B3%95%2F</url>
     <content type="text"></content>
