@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[直接插入排序[哨兵]与希尔排序[非哨兵].md]]></title>
+    <url>%2F%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%2F%E7%9B%B4%E6%8E%A5%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F(%E5%93%A8%E5%85%B5)%E4%B8%8E%E5%B8%8C%E5%B0%94%E6%8E%92%E5%BA%8F(%E9%9D%9E%E5%93%A8%E5%85%B5)%2F</url>
+    <content type="text"><![CDATA[直接插入排序(哨兵)与希尔排序(非哨兵)直接插入排序里面是哨兵，希尔排序都差不多为啥就不是哨兵了呢？首先我们需要来了解直接插入排序的算法思想很简单：就是先把第一个元素当作有序列表，然后第二个数和第一个数比较，如果第二数比第一个数大，则列表不改变，如果第二个数比第一个数小，则第一个数向后移动，第二个数插入到第一个数的位置，形成一个有序列别。第三个数要插入到前两个数形成的有序列表中，从后往前比较，也叫是先和排序后的第二个数比较大小，如果比第二个数小，再和第一个数比较，插入到合适的位置。以此类推，完成排序不带哨兵的代码实现如下： 12345678910111213141516171819202122void InsertSort(ElementType A[],int N)&#123; int i,j; // 用来暂时存储插入数据的变量 ElementType temp; // A[i]代表的是当前需要排序的元素 for (i=1; i&lt;N; i++) &#123; temp = A[i]; // 从j-1到j=1,也是已排序的列表从后往前遍历 for (j = i; j &gt; 0; j--) &#123; // A[j-1]代表的是已排序列表中的元素，第一次内循环是已排序的最后一个元素。比较大小，列表中比插入元素小的元素向后移动，找到插入点 if (A[j - 1] &gt; temp) A[j] = A[j - 1]; else break; &#125; // A[j - 1]比temp大，所以插入元素再A[j]位置 A[j]=temp; &#125;&#125; 带哨兵的代码：带哨兵的一般会将数组设置的大一位A[N+1]，A[0]不存数据，A[1-N]表示数据。 123456789101112131415161718void WithSentrySort(ElementType A[],int N)&#123; int i,j; // 从2开始循环是因为A[0]不存数据 for (i = 2; i &lt; N; i++) &#123; // 这里A[0]的作用等于上面的temp，代表要插入的元素 A[0] = A[i]; // 这里和上面的区别只是j = i - 1没啥区别,怎么写都可以,内循环第一次循环时A[j]表示已排序最后一个元素 // 同上，元素向后移，找到插入点 for(j = i - 1; A[j] &gt; A[0]; j--) &#123; A[j + 1] = A[j]; &#125; // 因为A[j] &gt; A[0]，所以插入j+1位置 A[j + 1] = A[0]; &#125;&#125; 这两个写法看起来差距不大，那么哨兵到底有啥用呢？先看看网上的说法： 暂时存放待插入的元素 防止数组下标越界，将j&gt;0与A[j]&gt;temp结合成只有一次比较A[j]&gt;A[0]，这样for循环只做了一次比较，提高了效率，无哨兵的情况需要比较两次，for循环有两个判断条件 第一个很好理解，就是相当于第一种写法的temp第二个其实带入代码就懂了，第二种比第一种少了一个j &gt; 0的判断，为啥不需要这个判断呢，因为A[0]存放的是A[i]也就是现在需要插入的值，在j–的过程中，j=0时，A[j] == A[0]，此时循环条件不再满足，元素将插入A[1]的位置，j–永远不可能到达负数，从而少了一个j &gt; 0的判断。也就达到了防止数据下标越界和提高效率的目的。]]></content>
+      <categories>
+        <category>数据结构</category>
+      </categories>
+      <tags>
+        <tag>直接插入排序</tag>
+        <tag>希尔排序</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Git、Github、Github Desktop]]></title>
     <url>%2FGit%2FGit%E3%80%81Github%E3%80%81Github%20Desktop%2F</url>
     <content type="text"><![CDATA[最近配了台新电脑，在装Git的时候遇到了一些问题，在此记录一下 百度Git安装教程一般都告诉我们先去官网下载，安装完后进行配置 配置用户名：git config –global user.name “xxxx” 配置邮箱：git config –global user.email “xxxx” 生成SSH：ssh-keygen -t rsa –C “youremail@example.com“ 那么这三步到底是干啥的？有没有必要呢？首先要知道的是clone和push有两种方式，一种是https,每次clone（私有项目，clone共有项目不需要）和push都需要输入用户名和密码，另一种就是通过ssh就行验证，这样就不用输入用户名和密码了。配置用户名和邮箱在我的理解中就是添加一个身份认证标记。用户向远程仓库push的时候Git“仿佛”是不会根据你用户名和密码来进行记录的，因为多个用户可以只使用一个用户名和密码，特别是使用SSH的时候。生成的SSH分为一个私钥一个公钥，公钥一般都要配置到github上（公司git仓库同理），每次通过SSH验证，然后就可以愉快的工作了，而不需要一直输入用户名和密码所以用户名和邮箱是必须配置的，不配置在push的时候就会报错，而SSH根据自己的习惯和喜好来决定~ 再说一下Github Desktop，这是一个git/github的图形化操作工具，他是自带git的，之前我一直不知道，位置是user-&gt;AppData-&gt;Local-&gt;GithubDesktop-&gt;app-x.x.x-&gt;resources&gt;app-&gt;git。然后使用自己的Github或者公司账号就可以登录了，初次登录和File-&gt;Options-&gt;git都可以设置用户名和邮箱，和之前“git config –global”命令效果完全相同，而且他们修改的都是同一个配置文件user-&gt;.gitconfig，使用任何一种方式修改，都是修改的这个文件。Github Desktop每次clone都巨慢超时失败，我也不知道为啥]]></content>
