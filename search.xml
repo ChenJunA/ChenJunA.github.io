@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title><![CDATA[直接插入排序[哨兵]与希尔排序[非哨兵].md]]></title>
-    <url>%2F%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%2F%E7%9B%B4%E6%8E%A5%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F(%E5%93%A8%E5%85%B5)%E4%B8%8E%E5%B8%8C%E5%B0%94%E6%8E%92%E5%BA%8F(%E9%9D%9E%E5%93%A8%E5%85%B5)%2F</url>
+    <title><![CDATA[直接插入排序[哨兵]与希尔排序[非哨兵]]]></title>
+    <url>%2FDataStructure%2F%E7%9B%B4%E6%8E%A5%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F(%E5%93%A8%E5%85%B5)%E4%B8%8E%E5%B8%8C%E5%B0%94%E6%8E%92%E5%BA%8F(%E9%9D%9E%E5%93%A8%E5%85%B5)%2F</url>
     <content type="text"><![CDATA[直接插入排序(哨兵)与希尔排序(非哨兵)直接插入排序里面是哨兵，希尔排序都差不多为啥就不是哨兵了呢？首先我们需要来了解直接插入排序的算法思想很简单：就是先把第一个元素当作有序列表，然后第二个数和第一个数比较，如果第二数比第一个数大，则列表不改变，如果第二个数比第一个数小，则第一个数向后移动，第二个数插入到第一个数的位置，形成一个有序列别。第三个数要插入到前两个数形成的有序列表中，从后往前比较，也叫是先和排序后的第二个数比较大小，如果比第二个数小，再和第一个数比较，插入到合适的位置。以此类推，完成排序不带哨兵的代码实现如下： 12345678910111213141516171819202122void InsertSort(ElementType A[],int N)&#123; int i,j; // 用来暂时存储插入数据的变量 ElementType temp; // A[i]代表的是当前需要排序的元素 for (i=1; i&lt;N; i++) &#123; temp = A[i]; // 从j-1到j=1,也是已排序的列表从后往前遍历 for (j = i; j &gt; 0; j--) &#123; // A[j-1]代表的是已排序列表中的元素，第一次内循环是已排序的最后一个元素。比较大小，列表中比插入元素小的元素向后移动，找到插入点 if (A[j - 1] &gt; temp) A[j] = A[j - 1]; else break; &#125; // A[j - 1]比temp大，所以插入元素再A[j]位置 A[j]=temp; &#125;&#125; 带哨兵的代码：带哨兵的一般会将数组设置的大一位A[N+1]，A[0]不存数据，A[1-N]表示数据。 123456789101112131415161718void WithSentrySort(ElementType A[],int N)&#123; int i,j; // 从2开始循环是因为A[0]不存数据 for (i = 2; i &lt; N; i++) &#123; // 这里A[0]的作用等于上面的temp，代表要插入的元素 A[0] = A[i]; // 这里和上面的区别只是j = i - 1没啥区别,怎么写都可以,内循环第一次循环时A[j]表示已排序最后一个元素 // 同上，元素向后移，找到插入点 for(j = i - 1; A[j] &gt; A[0]; j--) &#123; A[j + 1] = A[j]; &#125; // 因为A[j] &gt; A[0]，所以插入j+1位置 A[j + 1] = A[0]; &#125;&#125; 这两个写法看起来差距不大，那么哨兵到底有啥用呢？先看看网上的说法： 暂时存放待插入的元素 防止数组下标越界，将j&gt;0与A[j]&gt;temp结合成只有一次比较A[j]&gt;A[0]，这样for循环只做了一次比较，提高了效率，无哨兵的情况需要比较两次，for循环有两个判断条件 第一个很好理解，就是相当于第一种写法的temp第二个其实带入代码就懂了，第二种比第一种少了一个j &gt; 0的判断，为啥不需要这个判断呢，因为A[0]存放的是A[i]也就是现在需要插入的值，在j–的过程中，j=0时，A[j] == A[0]，此时循环条件不再满足，元素将插入A[1]的位置，j–永远不可能到达负数，从而少了一个j &gt; 0的判断。也就达到了防止数据下标越界和提高效率的目的。]]></content>
       <categories>
         <category>数据结构</category>
@@ -14,7 +14,7 @@
   </entry>
   <entry>
     <title><![CDATA[Git、Github、Github Desktop]]></title>
-    <url>%2FGit%2FGit%E3%80%81Github%E3%80%81Github%20Desktop%2F</url>
+    <url>%2FGit%2FGit%20Github%20Github%20Desktop%2F</url>
     <content type="text"><![CDATA[最近配了台新电脑，在装Git的时候遇到了一些问题，在此记录一下 百度Git安装教程一般都告诉我们先去官网下载，安装完后进行配置 配置用户名：git config –global user.name “xxxx” 配置邮箱：git config –global user.email “xxxx” 生成SSH：ssh-keygen -t rsa –C “youremail@example.com“ 那么这三步到底是干啥的？有没有必要呢？首先要知道的是clone和push有两种方式，一种是https,每次clone（私有项目，clone共有项目不需要）和push都需要输入用户名和密码，另一种就是通过ssh就行验证，这样就不用输入用户名和密码了。配置用户名和邮箱在我的理解中就是添加一个身份认证标记。用户向远程仓库push的时候Git“仿佛”是不会根据你用户名和密码来进行记录的，因为多个用户可以只使用一个用户名和密码，特别是使用SSH的时候。生成的SSH分为一个私钥一个公钥，公钥一般都要配置到github上（公司git仓库同理），每次通过SSH验证，然后就可以愉快的工作了，而不需要一直输入用户名和密码所以用户名和邮箱是必须配置的，不配置在push的时候就会报错，而SSH根据自己的习惯和喜好来决定~ 再说一下Github Desktop，这是一个git/github的图形化操作工具，他是自带git的，之前我一直不知道，位置是user-&gt;AppData-&gt;Local-&gt;GithubDesktop-&gt;app-x.x.x-&gt;resources&gt;app-&gt;git。然后使用自己的Github或者公司账号就可以登录了，初次登录和File-&gt;Options-&gt;git都可以设置用户名和邮箱，和之前“git config –global”命令效果完全相同，而且他们修改的都是同一个配置文件user-&gt;.gitconfig，使用任何一种方式修改，都是修改的这个文件。Github Desktop每次clone都巨慢超时失败，我也不知道为啥]]></content>
       <categories>
         <category>Git</category>
@@ -26,11 +26,27 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[ACP]]></title>
+    <url>%2FJava%2FACP%2F</url>
+    <content type="text"><![CDATA[A-Availability：可用性在集群中一部分节点故障后，集群整体是否还能响应客户端的读写请求（对数据更新具备高可用性） C-Consistency：一致性在分布式系统中的所有数据备份，在同一时刻是否同样的值 P-Partition tolerance: 分区容错性大多数分布式系统都分布在多个子网络。每个子网络就叫做一个区（partition）。分区容错的意思是，区间通信可能失败。 参考资料 https://blog.csdn.net/yeyazhishang/article/details/80758354?depth_1-utm_source=distribute.pc_relevant.none-task&amp;utm_source=distribute.pc_relevant.none-task http://www.ruanyifeng.com/blog/2018/07/cap.html]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+  </entry>
+  <entry>
+    <title><![CDATA[软件架构的演变]]></title>
+    <url>%2FJava%2F%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E7%9A%84%E6%BC%94%E5%8F%98%2F</url>
+    <content type="text"><![CDATA[单体架构特点 所有的功能集成在一个项目工程中 优点 项目架构简单，前期开发成本低，周期短，小型项目的首选 缺点 全部功能集成在一个工程中，对于大型项目不易开发、扩展及维护 系统性能扩展只能通过扩展集群结点，成本高、有瓶颈 技术栈受限 垂直架构特点 当访问量逐渐增大，单一应用增加机器带来的加速度越来越小，将应用拆成互不相干的几个应用，以提升效率 优点 项目架构简单，前期开发成本低，周期短，小型项目的首选。 通过垂直拆分，原来的单体项目不至于无限扩大 不同的项目可采用不同的技术。 缺点 全部功能集成在一个工程中，对于大型项目不易开发、扩展及维护。 系统性能扩展只能通过扩展集群结点，成本高、有瓶颈。 SOA架构（面向服务的架构：Service-Oriented Architecture）特点 分布式 分为服务消费者和服务提供者，通过ESB或者RPC调用 一般分为了展示层（调用各个服务），服务层（提供服务） 优点 抽取公共的功能为服务,提高开发效率 对不同的服务进行集群化部署解决系统压力 基于ESB/RPC减少系统耦合 缺点 抽取服务的粒度较大 服务提供方与调用方接口耦合度较高 微服务架构特点 分布式 分为服务消费者和服务提供者，通过HTTP调用 一般分为了展示层（调用各个服务），服务层（提供服务） 服务调用经过网关 优点 通过服务的原子化拆分，以及微服务的独立打包、部署和升级，小团队的交付周期将缩短，运维成本也将大幅度下降 微服务遵循单一原则。微服务之间采用Restful等轻量协议传输 缺点 微服务过多，服务治理成本高，不利于系统维护 分布式系统开发的技术成本高（容错、分布式事务等） SOA与微服务的区别 SOA是一种设计方法，其中包含多个服务，服务之间通过相互依赖最终提供一系列的功能。一个服务通常以独立的形式存在与操作系统进程中。各个服务之间 通过网络调用。 微服务是在 SOA 上做的升华，微服务架构强调的一个重点是“业务需要彻底的组件化和服务化”，原有的单个业务系统会拆分为多个可以独立开发、设计、运行的小应用。这些小应用之间通过服务完成交互和集成。 微服务架构 = 80%的SOA服务架构思想 + 100%的组件化架构思想 + 80%的领域建模思想 微服务颗粒度更小，一般使用的通讯方式不同 分布式分布式将一个完整的系统，按照业务功能，拆分成一个个独立的子系统，SOA和微服务都是基于分布式的架构]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+  </entry>
+  <entry>
     <title><![CDATA[Java多线程之join()方法]]></title>
-    <url>%2FJavaSE%2FJava%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B9%8Bjoin-%E6%96%B9%E6%B3%95%2F</url>
+    <url>%2FJava%2FJava%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B9%8Bjoin-%E6%96%B9%E6%B3%95%2F</url>
     <content type="text"></content>
       <categories>
-        <category>JavaSE</category>
+        <category>Java</category>
       </categories>
       <tags>
         <tag>多线程</tag>
@@ -38,7 +54,10 @@
   </entry>
   <entry>
     <title><![CDATA[写在前面的话]]></title>
-    <url>%2Funcategorized%2F%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2%E7%9A%84%E8%AF%9D%2F</url>
+    <url>%2F%E9%9A%8F%E7%AC%94%2F%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2%E7%9A%84%E8%AF%9D%2F</url>
     <content type="text"><![CDATA[其实我只是想写个免责声明，想了一两天都不知道要写点啥。就这样吧！以后想改再改… 这个地方只要就是用来放一些自己解决问题的记录，随笔啥的，之前的笔记那些基本都是从别人博客和书上摘抄的，还没想好要不要放上来。 最后，侵删]]></content>
+      <categories>
+        <category>随笔</category>
+      </categories>
   </entry>
 </search>
